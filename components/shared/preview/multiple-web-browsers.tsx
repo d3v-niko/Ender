@@ -29,13 +29,6 @@ export default function MultipleWebBrowsers({
   const SCALE_FACTOR = scaleFactor || 0.06;
   const [activeBrowsers, setActiveBrowsers] = useState<BrowserData[]>(browsers);
 
-  useEffect(() => {
-    if (autoRotate) {
-      startRotation();
-    }
-    return () => clearInterval(interval);
-  }, [autoRotate, startRotation]);
-
   const startRotation = useCallback(() => {
     interval = setInterval(() => {
       setActiveBrowsers((prevBrowsers: BrowserData[]) => {
@@ -45,6 +38,13 @@ export default function MultipleWebBrowsers({
       });
     }, rotationInterval);
   }, [rotationInterval]);
+
+  useEffect(() => {
+    if (autoRotate) {
+      startRotation();
+    }
+    return () => clearInterval(interval);
+  }, [autoRotate, startRotation]);
 
   return (
     <div className="relative h-[600px] w-full">
