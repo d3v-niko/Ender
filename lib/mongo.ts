@@ -1,4 +1,5 @@
 import { MongoClient, Db } from 'mongodb'
+// Index creation now runs only once per application lifecycle
 
 declare global {
   // eslint-disable-next-line no-var
