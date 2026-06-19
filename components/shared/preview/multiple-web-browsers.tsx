@@ -44,7 +44,7 @@ export default function MultipleWebBrowsers({
         return newArray;
       });
     }, rotationInterval);
-  };
+  }, [rotationInterval]);
 
   return (
     <div className="relative h-[600px] w-full">
