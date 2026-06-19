@@ -7,6 +7,7 @@
 import { basePrompt, editModeRules, targetedEditModeRules, codeCompletionRules } from './base-prompt';
 import { solanaPrompt } from './solana-prompt';
 import { celoPrompt } from './celo-prompt';
+import { ThemeOption } from '@/app/context/ThemeContext';
 
 export type BlockchainNetwork = 'solana' | 'celo';
 
@@ -14,6 +15,7 @@ export interface PromptOptions {
   conversationContext?: string;
   isEdit?: boolean;
   editContext?: any;
+  theme?: ThemeOption;
 }
 
 /**
@@ -42,19 +44,10 @@ export function getNetworkPrompt(
   // Add network-specific instructions
   systemPrompt += `\n\n${networkPrompt}`;
 
-  // Add edit mode rules if in edit mode
-  if (isEdit) {
-    systemPrompt += `\n\n${editModeRules}`;
-
-    // Add targeted edit mode rules if edit context is provided
-    if (editContext) {
-      systemPrompt += `\n\n${targetedEditModeRules(editContext)}`;
-    }
+  // Append selected theme to prompt if provided
+  if (options.theme) {
+    systemPrompt += `\n\nUser selected theme: ${options.theme}`;
   }
-
-  // Always add code completion rules at the end
-  systemPrompt += `\n\n${codeCompletionRules}`;
-
   return systemPrompt;
 }
 

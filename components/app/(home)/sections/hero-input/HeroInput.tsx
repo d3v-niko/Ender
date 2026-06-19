@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useTheme } from "@/app/context/ThemeContext";
 
 import Globe from "./_svg/Globe";
 import HeroInputSubmitButton from "./Button/Button";
@@ -13,6 +14,7 @@ import { Endpoint } from "@/components/shared/Playground/Context/types";
 export default function HeroInput() {
   const [tab, setTab] = useState<Endpoint>(Endpoint.Scrape);
   const [url, setUrl] = useState<string>("");
+  const { theme } = useTheme();
 
   return (
     <div className="max-w-552 mx-auto w-full z-[11] lg:z-[2] rounded-20 lg:-mt-76">
@@ -70,7 +72,7 @@ export default function HeroInput() {
 
         <Link
           className="contents"
-          href={`/playground?endpoint=${tab}&url=${url}&autorun=true`}
+          href={`/playground?endpoint=${tab}&url=${url}&theme=${theme}&autorun=true`}
         >
           <HeroInputSubmitButton dirty={url.length > 0} />
         </Link>

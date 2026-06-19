@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
+import { ThemeProvider } from '@/app/context/ThemeContext';
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -47,7 +48,7 @@ export default function RootLayout({
             window._triedToInstallNetworkLoggingHandler = true;
           `}
         </Script>
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

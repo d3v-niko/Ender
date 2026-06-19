@@ -1,7 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ScrapeGraphAI } from "scrapegraph-js";
+import Redis from "ioredis";
+import { redisClient } from "@/lib/redis";
 
-export async function POST(request: NextRequest) {
+const RATE_LIMIT_MAX = parseInt(process.env.RATE_LIMIT_MAX ?? "60");
+const RATE_LIMIT_WINDOW = parseInt(process.env.RATE_LIMIT_WINDOW ?? "60");
+
+async function checkRateLimit(request: NextRequest) {
+  const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || request.headers.get("x-real-ip") || "unknown";
+  const key = `rate_limit:${ip}`;
+  const current = await redisClient.incr(key);
+  if (current === 1) {
+    await redisClient.expire(key, RATE_LIMIT_WINDOW);
+  }
+  if (current > RATE_LIMIT_MAX) {
+    return NextResponse.json({ error: "Rate limit exceeded" }, { status: 429 });
+  }
+  return null;
+}
+  // Rate limit check
+  const rateLimitResponse = await checkRateLimit(request);
+  if (rateLimitResponse) return rateLimitResponse;
+
   try {
     const { url, formats = ["markdown", "html"], options = {} } =
       await request.json();
