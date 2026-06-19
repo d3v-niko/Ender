@@ -25,6 +25,7 @@ import HomeHeroBadge from "@/components/app/(home)/sections/hero/Badge/Badge";
 import HomeHeroPixi from "@/components/app/(home)/sections/hero/Pixi/Pixi";
 import HomeHeroTitle from "@/components/app/(home)/sections/hero/Title/Title";
 import HeroInput from "@/components/app/(home)/sections/hero-input/HeroInput";
+import { useTheme, ThemeOption } from '@/app/context/ThemeContext';
 import { Connector } from "@/components/shared/layout/curvy-rect";
 import HeroFlame from "@/components/shared/effects/flame/hero-flame";
 import FirecrawlIcon from "@/components/FirecrawlIcon";
@@ -97,6 +98,7 @@ const workflowSteps = [
 
 export default function LandingPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   return (
     <HeaderProvider>
@@ -217,6 +219,19 @@ export default function LandingPage() {
                 <HomeHeroBadge />
                 <HomeHeroTitle />
 
+                <div className="mt-12 flex items-center gap-4">
+                  <label className="text-body-large text-accent-black">Theme:</label>
+                  <select
+                    value={theme}
+                    onChange={(e) => setTheme(e.target.value as ThemeOption)}
+                    className="bg-background-base border border-border-faint rounded p-2 text-body-large"
+                  >
+                    <option value="Glassmorphism">Glassmorphism</option>
+                    <option value="Retro">Retro</option>
+                    <option value="Sleek Dark">Sleek Dark</option>
+                    <option value="Neobrutalism">Neobrutalism</option>
+                  </select>
+                </div>
                 <div className="mt-12">
                   <HeroInput />
                 </div>
