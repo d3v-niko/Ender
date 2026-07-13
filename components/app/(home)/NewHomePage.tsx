@@ -123,30 +123,38 @@ export default function NewHomePage() {
           <Link href="/">
             <Logo className="w-[100px] md:w-[120px] text-white" />
           </Link>
-          {!currentUser ? (
-            <div
-              onClick={() => setIsAuthModalOpen(true)}
-              className="relative bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 text-lg transition-all duration-200 cursor-pointer select-none tracking-wide"
-              style={{ clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)" }}
+          <div className="flex items-center gap-8">
+            <Link
+              href="/gallery"
+              className="text-zinc-400 hover:text-white transition-colors font-mono text-sm tracking-wider uppercase select-none cursor-pointer"
             >
-              SIGN IN
-            </div>
-          ) : (
-            <div className="relative">
-              <button
-                onClick={() => setShowUserMenu(v => !v)}
-                className="relative bg-white text-black font-bold py-3 px-8 text-lg transition-all duration-200 cursor-pointer select-none tracking-wide border border-zinc-300"
+              Gallery
+            </Link>
+            {!currentUser ? (
+              <div
+                onClick={() => setIsAuthModalOpen(true)}
+                className="relative bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 text-lg transition-all duration-200 cursor-pointer select-none tracking-wide"
                 style={{ clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)" }}
               >
-                {currentUser.email}
-              </button>
-              {showUserMenu && (
-                <div className="absolute right-0 mt-2 bg-black border border-zinc-700 rounded-md overflow-hidden">
-                  <button onClick={logout} className="block w-full text-left px-4 py-2 text-white hover:bg-zinc-800">Sign out</button>
-                </div>
-              )}
-            </div>
-          )}
+                SIGN IN
+              </div>
+            ) : (
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(v => !v)}
+                  className="relative bg-white text-black font-bold py-3 px-8 text-lg transition-all duration-200 cursor-pointer select-none tracking-wide border border-zinc-300"
+                  style={{ clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)" }}
+                >
+                  {currentUser.email}
+                </button>
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 bg-black border border-zinc-700 rounded-md overflow-hidden">
+                    <button onClick={logout} className="block w-full text-left px-4 py-2 text-white hover:bg-zinc-800">Sign out</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
